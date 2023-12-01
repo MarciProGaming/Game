@@ -87,9 +87,9 @@ def phaseOne():
 phaseOne()
 
 answers = [' explores a twisty passage.', ' found a little underground pond.']
-caveent = [' found a dark cave entrance. Do you want to go in?',
-           ' found a little hole by the wall, leading to a cave. Do you want to find out what is inside?',
-           ' found a big hole on the ground. Do you want to  jump in the hole?']
+caveent = [' found a dark cave entrance. Do you want to go in? (yes or no)',
+           ' found a little hole by the wall, leading to a cave. Do you want to find out what is inside? (yes or no)',
+           ' found a big hole on the ground. Do you want to  jump in the hole? (yes or no)']
 noans = [' decided not to go in.\n', ' went past the entrance and continued the walk.\n',
          ' thought it was not a good idea to go inside.\n', ' just simply did not care about the cave.\n']
 rest = [' found nothing to rest on, so just stood by the wall and tried to fall asleep.',
@@ -117,7 +117,7 @@ def explore():
     global endmg
     while True:
         try:
-            q = input(chname + random.choice(caveent))
+            q = input(chname + random.choice(caveent) + "\n")
             if q == "Yes" or q == "yes":
                 print(chname + ' slowly goes to the cave entrance and goes in.')
                 print(chname + ' entered the dark and mysterious cave! ')
@@ -156,22 +156,22 @@ def explore():
                                 print('There is no enemy to attack')
                             elif incombat == 1:
                                 print('You attacked the enemy')
-                                incombat = 0
                                 xp += random.randint(1, 4)
                                 hp -= endmg
                                 stamina -= 1
                                 enhp -= dmg
-                                if enhp == 0:
+                                if enhp <= 0:
                                     print(chname + random.choice(ensucattack))
-                                elif enhp < 3:
+                                    incombat = 0
+                                elif enhp > 0:
                                     print(chname + random.choice(enattack))
-                                if xp == 10:
+                                if xp >= 10:
                                     xp = 0
-                                    #xpmin += 5
                                     level += 1
                                     dmg += random.randint(1, 3)
-                                    enhp += (2, 5)
-                                    endmg += (0, 2)
+                                    enhp += random.randint(2, 5)
+                                    endmg += random.randint (0, 2)
+                                    print(chname + " levelled up, and is on currently level " + str(level))
                                 if hp == 0:
                                     print('You died. The Game is over!')
                                     break
