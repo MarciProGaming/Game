@@ -138,13 +138,13 @@ def explore():
                         elif insc == 'auto':
                             current_time = time.time()
                             time_difference = current_time - last_auto_time
-                            time_remaining = 600 -time_difference
+                            time_remaining = 600 - time_difference
 
                             if time_remaining <= 0:
                                 print("You're about to turn auto mode on.")
                                 print("--- This will reduce your life and stamina to 1. ---")
                                 print("Auto mode is usable every 10 minutes.")
-                                automode = input("Are you sure you want to use auto mode? (yes or no)")
+                                automode = input("Are you sure you want to use auto mode? (yes or no)\n")
 
                                 if automode == 'yes' or automode == 'Yes':
                                     hp = 1
@@ -162,11 +162,10 @@ def explore():
                         elif insc == 'quit':
                             print('You leaved The Game! Bye!')
                             break
-                            quit()
 
                         elif insc == 'explore':
                             if incombat == 1:
-                                print(chname + " is currently under attack, and can't go past the enemy.");
+                                print(chname + " is currently under attack, and can't go past the enemy.")
                             elif incombat == 0:
                                 print(chname + random.choice(enemy))
                                 incombat = 1
@@ -211,13 +210,11 @@ def explore():
                                 if hp == 0:
                                     print('You died. The Game is over!')
                                     break
-                                    quit()
                                 elif hp < 3:
                                     print(chname + ' is low on health, and needs to rest.')
                                 elif stamina == 0:
                                     print(chname + ' had no more energy, fall asleep, and never woke up.')
                                     break
-                                    quit()
                                 elif stamina < 3:
                                     print(chname + ' is really tired, and needs to rest immediately!')
 
@@ -278,11 +275,10 @@ def explore():
                                     elif insc == 'quit':
                                         print('You leaved The Game! Bye!')
                                         break
-                                        quit()
 
                                     elif insc == 'explore':
                                         if incombat == 1:
-                                            print(chname + " is currently under attack, and can't go past the enemy.");
+                                            print(chname + " is currently under attack, and can't go past the enemy.")
                                         elif incombat == 0:
                                             print(chname + random.choice(enemy))
                                             incombat = 1
@@ -328,13 +324,11 @@ def explore():
                                             if hp == 0:
                                                 print('You died. The Game is over!')
                                                 break
-                                                quit()
                                             elif hp < 3:
                                                 print(chname + ' is low on health, and needs to rest.')
                                             elif stamina == 0:
                                                 print(chname + ' had no more energy, fall asleep, and never woke up.')
                                                 break
-                                                quit()
                                             elif stamina < 3:
                                                 print(chname + ' is really tired, and needs to rest immediately!')
 
