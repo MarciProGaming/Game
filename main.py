@@ -135,8 +135,12 @@ def explore():
                             quit()
 
                         elif insc == 'explore':
-                            print(chname + random.choice(enemy))
-                            incombat = 1
+                            if incombat == 1:
+                                print(chname + " is currently under attack, and can't go past the enemy.");
+                            elif incombat == 0:
+                                print(chname + random.choice(enemy))
+                                incombat = 1
+                                enhp = random.randint(3, 15)
 
                         elif insc == 'stats':
                             print('Character: ' + ch)
@@ -169,9 +173,8 @@ def explore():
                                     xp = 0
                                     level += 1
                                     dmg += random.randint(1, 3)
-                                    enhp += random.randint(2, 5)
                                     endmg += random.randint (0, 2)
-                                    print(chname + " levelled up, and is on currently level " + str(level))
+                                    print(chname + " levelled up, and is on currently level " + str(level) + ".")
                                 if hp == 0:
                                     print('You died. The Game is over!')
                                     break
@@ -187,12 +190,14 @@ def explore():
 
                         elif insc == 'rest':
                             print(chname + random.choice(rest))
-                            hp += 1
+                            hp += random.randint(1, 5)
                             stamina += random.randint(4, 9)
                             if hp > 10:
                                 hp = 10
+                                print(chname + "'s health is full.")
                             if stamina > 15:
                                 stamina = 15
+                                print(chname + "'s stamina is full.")
                     except:
                         print('An error has occurred, please restart The Game!')
                 break
@@ -203,80 +208,92 @@ def explore():
                 if tries == 5:
                     time.sleep(0.3)
                     print(chname + ' tried to avoid the cave, but stepped wrong and fell into the cave.')
-                    print('Write <help> to list the commands.')
                     while True:
                         try:
-                            insc = input('--->')
-                            if insc == 'help':
-                                print(commands)
+                            print('Write <help> to list the commands.')
+                            while True:
+                                try:
+                                    insc = input('--->')
+                                    if insc == 'help':
+                                        print(commands)
 
-                            elif insc == 'quit':
-                                print('You leaved The Game! Bye!')
-                                break
-                                quit()
-
-                            elif insc == 'explore':
-                                print(chname + random.choice(enemy))
-                                incombat = 1
-
-                            elif insc == 'stats':
-                                print('Character: ' + ch)
-                                print('HP: ' + str(hp))
-                                print('Stamina: ' + str(stamina))
-                                print('Damage: ' + str(dmg))
-                                print('XP: ' + str(xp))
-                                print('Level: ' + str(level))
-
-                            elif insc == 'level':
-                                print('Level: ' + str(level))
-                                print('Enemy HP: ' + str(enhp))
-                                print('Enemy damage: ' + str(endmg))
-
-                            elif insc == 'attack':
-                                if incombat == 0:
-                                    print('There is no enemy to attack')
-                                elif incombat == 1:
-                                    print('You attacked the enemy')
-                                    incombat = 0
-                                    xp += random.randint(1, 4)
-                                    hp -= endmg
-                                    stamina -= 1
-                                    enhp -= dmg
-                                    if enhp == 0:
-                                        print(chname + random.choice(ensucattack))
-                                    elif enhp < 3:
-                                        print(chname + random.choice(enattack))
-                                    if xp == 10:
-                                        xp = 0
-                                        #xpmin += 5
-                                        level += 1
-                                        dmg += random.randint(1, 3)
-                                        enhp += (2, 5)
-                                        endmg += (0, 2)
-                                    if hp == 0:
-                                        print('You died. The Game is over!')
+                                    elif insc == 'quit':
+                                        print('You leaved The Game! Bye!')
                                         break
                                         quit()
-                                    elif hp < 3:
-                                        print(chname + ' is low on health, and needs to rest.')
-                                    elif stamina == 0:
-                                        print(chname + ' had no more energy, fall asleep, and never woke up.')
-                                        break
-                                        quit()
-                                    elif stamina < 3:
-                                        print(chname + ' is really tired, and needs to rest immediately!')
 
-                            elif insc == 'rest':
-                                print(chname + random.choice(rest))
-                                hp += 1
-                                stamina += random.randint(4, 9)
-                                if hp > 10:
-                                    hp = 10
-                                if stamina > 15:
-                                    stamina = 15
+                                    elif insc == 'explore':
+                                        if incombat == 1:
+                                            print(chname + " is currently under attack, and can't go past the enemy.");
+                                        elif incombat == 0:
+                                            print(chname + random.choice(enemy))
+                                            incombat = 1
+                                            enhp = random.randint(3, 15)
+
+                                    elif insc == 'stats':
+                                        print('Character: ' + ch)
+                                        print('HP: ' + str(hp))
+                                        print('Stamina: ' + str(stamina))
+                                        print('Damage: ' + str(dmg))
+                                        print('XP: ' + str(xp))
+                                        print('Level: ' + str(level))
+
+                                    elif insc == 'level':
+                                        print('Level: ' + str(level))
+                                        print('Enemy HP: ' + str(enhp))
+                                        print('Enemy damage: ' + str(endmg))
+
+                                    elif insc == 'attack':
+                                        if incombat == 0:
+                                            print('There is no enemy to attack')
+                                        elif incombat == 1:
+                                            print('You attacked the enemy')
+                                            xp += random.randint(1, 4)
+                                            hp -= endmg
+                                            stamina -= 1
+                                            enhp -= dmg
+                                            if enhp <= 0:
+                                                print(chname + random.choice(ensucattack))
+                                                incombat = 0
+                                            elif enhp > 0:
+                                                print(chname + random.choice(enattack))
+                                            if xp >= 10:
+                                                xp = 0
+                                                level += 1
+                                                dmg += random.randint(1, 3)
+                                                endmg += random.randint(0, 2)
+                                                print(chname + " levelled up, and is on currently level " + str(
+                                                    level) + ".")
+                                            if hp == 0:
+                                                print('You died. The Game is over!')
+                                                break
+                                                quit()
+                                            elif hp < 3:
+                                                print(chname + ' is low on health, and needs to rest.')
+                                            elif stamina == 0:
+                                                print(chname + ' had no more energy, fall asleep, and never woke up.')
+                                                break
+                                                quit()
+                                            elif stamina < 3:
+                                                print(chname + ' is really tired, and needs to rest immediately!')
+
+                                    elif insc == 'rest':
+                                        print(chname + random.choice(rest))
+                                        hp += random.randint(1, 5)
+                                        stamina += random.randint(4, 9)
+                                        if hp > 10:
+                                            hp = 10
+                                            print(chname + "'s health is full.")
+                                        if stamina > 15:
+                                            stamina = 15
+                                            print(chname + "'s stamina is full.")
+                                except:
+                                    print('An error has occurred, please restart The Game!')
+                            break
                         except:
                             print('An error has occurred, please restart The Game!')
                     break
+
 
             elif q == 'quit':
                 print('You left The Game! Bye!')
