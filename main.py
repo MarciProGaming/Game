@@ -188,6 +188,7 @@ def explore():
                                 elif stamina < 3:
                                     print(chname + ' is really tired, and needs to rest immediately!')
 
+
                         elif insc == 'rest':
                             print(chname + random.choice(rest))
                             hp += random.randint(1, 5)
