@@ -86,6 +86,7 @@ def phaseOne():
         continue
 
 
+
 phaseOne()
 
 answers = [' explores a twisty passage.', ' found a little underground pond.']
