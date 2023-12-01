@@ -43,6 +43,8 @@ xp = 0
 level = 0
 stamina = 15
 
+last_auto_time = time.time()
+
 xpmin = 10
 tries = 0
 
@@ -97,10 +99,11 @@ rest = [' found nothing to rest on, so just stood by the wall and tried to fall 
 enattack = [' damaged the enemy, but it is still alive.', ' tried to kill the enemy, but only did a small damage.']
 ensucattack = [' executed the enemy.', ' killed the enemy.', " cut off the enemy's head."]
 enemy = [' found an angry Goblin.', ' has been attacked by a Little Dragon.']
-commands = ['help', 'quit', 'attack', 'rest', 'explore', 'stats', 'level']
+commands = ['help', 'quit', 'attack', 'rest', 'explore', 'stats', 'level', 'auto']
 incombat = 0
 
 
+# noinspection PyTypeChecker
 def explore():
     time.sleep(1)
     time.sleep(0.1)
@@ -115,6 +118,7 @@ def explore():
     global tries
     global enhp
     global endmg
+    global last_auto_time
     while True:
         try:
             q = input(chname + random.choice(caveent) + "\n")
@@ -126,8 +130,33 @@ def explore():
                     try:
                         global insc
                         insc = input('--->')
+
                         if insc == 'help':
                             print(commands)
+
+                        elif insc == 'auto':
+                            current_time = time.time()
+                            time_difference = current_time - last_auto_time
+                            time_remaining = 600 -time_difference
+
+                            if time_remaining <= 0:
+                                print("You're about to turn auto mode on.")
+                                print("--- This will reduce your life and stamina to 1. ---")
+                                print("Auto mode is usable every 10 minutes.")
+                                automode = input("Are you sure you want to use auto mode? (yes or no)")
+
+                                if automode == 'yes' or automode == 'Yes':
+                                    hp = 1
+                                    stamina = 1
+                                    autolvls = random.randint(2,5)
+                                    level += autolvls
+                                    print(chname + "levelled up " + autolvls + ", and is now on level " + level + ".")
+                                    last_auto_time = time.time()
+
+                                else:
+                                    print("Auto mode cancelled.")
+                            else:
+                                print(f"You need to wait {int(time_remaining)} seconds before using auto mode again.")
 
                         elif insc == 'quit':
                             print('You leaved The Game! Bye!')
@@ -167,6 +196,7 @@ def explore():
                                 if enhp <= 0:
                                     print(chname + random.choice(ensucattack))
                                     incombat = 0
+                                    enhp = 0
                                 elif enhp > 0:
                                     print(chname + random.choice(enattack))
                                 if xp >= 10:
@@ -219,6 +249,31 @@ def explore():
                                     if insc == 'help':
                                         print(commands)
 
+                                    elif insc == 'auto':
+                                        current_time = time.time()
+                                        time_difference = current_time - last_auto_time
+                                        time_remaining = 600 - time_difference
+
+                                        if time_remaining <= 0:
+                                            print("You're about to turn auto mode on.")
+                                            print("--- This will reduce your life and stamina to 1. ---")
+                                            print("Auto mode is usable every 10 minutes.")
+                                            automode = input("Are you sure you want to use auto mode? (yes or no)")
+
+                                            if automode == 'yes' or automode == 'Yes':
+                                                hp = 1
+                                                stamina = 1
+                                                autolvls = random.randint(2, 5)
+                                                level += autolvls
+                                                print(
+                                                    chname + "levelled up " + autolvls + ", and is now on level " + level + ".")
+                                                last_auto_time = time.time()
+
+                                            else:
+                                                print("Auto mode cancelled.")
+                                        else:
+                                            print(f"You need to wait {int(time_remaining)} seconds before using auto mode again.")
+
                                     elif insc == 'quit':
                                         print('You leaved The Game! Bye!')
                                         break
@@ -257,6 +312,7 @@ def explore():
                                             if enhp <= 0:
                                                 print(chname + random.choice(ensucattack))
                                                 incombat = 0
+                                                enhp = 0
                                             elif enhp > 0:
                                                 print(chname + random.choice(enattack))
                                             if xp >= 10:
