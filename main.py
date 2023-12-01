@@ -170,6 +170,8 @@ def explore():
                                 elif enhp > 0:
                                     print(chname + random.choice(enattack))
                                 if xp >= 10:
+                                    hp = 10
+                                    stamina = 15
                                     xp = 0
                                     level += 1
                                     dmg += random.randint(1, 3)
@@ -187,7 +189,6 @@ def explore():
                                     quit()
                                 elif stamina < 3:
                                     print(chname + ' is really tired, and needs to rest immediately!')
-
 
                         elif insc == 'rest':
                             print(chname + random.choice(rest))
@@ -259,6 +260,8 @@ def explore():
                                             elif enhp > 0:
                                                 print(chname + random.choice(enattack))
                                             if xp >= 10:
+                                                hp = 10
+                                                stamina = 15
                                                 xp = 0
                                                 level += 1
                                                 dmg += random.randint(1, 3)
