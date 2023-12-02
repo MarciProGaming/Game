@@ -171,41 +171,41 @@ def explore():
 
                         elif insc == 'skills':
                             if skillpts >= 1:
-                                print("1. Life steal: " + str(lfstlsklpts) + "points.")
-                                print("2. More Stamina: " + str(stmnsklpts) + "points.")
-                                print("3. More Health: " + str(hpsklpts) + "points.")
-                                print("4. Increase Damage: " + str(dmgsklpts) + "points.")
-                                print("5. Fast Learner: " + str(fstlrnsklpts) + "points.")
-                                skillupgr = input("Type in the number of the skill you want to upgrade.")
-                                if skillupgr == 1 or skillupgr == 1.:
+                                print("1. Life steal: " + str(lfstlsklpts) + " points.")
+                                print("2. More Stamina: " + str(stmnsklpts) + " points.")
+                                print("3. More Health: " + str(hpsklpts) + " points.")
+                                print("4. Increase Damage: " + str(dmgsklpts) + " points.")
+                                print("5. Fast Learner: " + str(fstlrnsklpts) + " points.")
+                                skillupgr = input("Type in the number of the skill you want to upgrade.\n--->")
+                                if skillupgr == "1" or skillupgr == "1.":
                                     lfstlsklpts += 1
                                     hpsteal += random.randint(1,2)
                                     upgrskl = "Life Steal"
                                     skillpts -= 1
                                     print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
 
-                                elif skillupgr == 2 or skillupgr == 2.:
+                                elif skillupgr == "2" or skillupgr == "2.":
                                     stmnsklpts += 1
                                     stammax += random.randint(1, 3)
                                     upgrskl = "More Stamina"
                                     skillpts -= 1
                                     print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(stmnsklpts)}")
 
-                                elif skillupgr == 3 or skillupgr == 3.:
+                                elif skillupgr == "3" or skillupgr == "3.":
                                     hpsklpts += 1
                                     hpmax += random.randint(1,2)
                                     upgrskl = "More Health"
                                     skillpts -= 1
                                     print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
 
-                                elif skillupgr == 4 or skillupgr == 4.:
+                                elif skillupgr == "4" or skillupgr == "4.":
                                     dmgsklpts += 1
                                     dmgplus += random.randint(1,3)
                                     upgrskl = "Increase Damage"
                                     skillpts -= 1
                                     print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(dmgsklpts)}")
 
-                                elif skillupgr == 5 or skillupgr == 5.:
+                                elif skillupgr == "5" or skillupgr == "5.":
                                     fstlrnsklpts += 1
                                     xpplus += random.randint(0,4)
                                     upgrskl = "Fast Learner"
@@ -278,6 +278,7 @@ def explore():
                                     print(chname + random.choice(ensucattack))
                                     incombat = 0
                                     enhp = 0
+
                                 elif enhp > 0:
                                     print(chname + random.choice(enattack))
                                 if xp >= 10:
@@ -285,10 +286,14 @@ def explore():
                                     stamina = stammax
                                     xp = 0
                                     level += 1
+                                    skillpts += 1
                                     dmg += random.randint(1, 3)
-                                    endmg += random.randint (2, 7)
-                                    print(chname + " levelled up, and is on currently level " + str(level) + ".")
-                                    print(chname + " has " + skillpts + "skillpoints. Use the command <skills> to choose a new skill.")
+                                    endmg += random.randint(2, 7)
+                                    print(chname + " levelled up, and is on currently level " + str(
+                                        level) + ".")
+                                    print(f"{str(chname)} has {str(skillpts)} skillpoints.")
+                                    print("Use the command <skills> to choose a new skill.")
+
                                 if hp == 0:
                                     print('You died. The Game is over!')
                                     break
@@ -360,13 +365,13 @@ def explore():
 
                                     elif insc == 'skills':
                                         if skillpts >= 1:
-                                            print("1. Life steal: " + str(lfstlsklpts) + "points.")
-                                            print("2. More Stamina: " + str(stmnsklpts) + "points.")
-                                            print("3. More Health: " + str(hpsklpts) + "points.")
-                                            print("4. Increase Damage: " + str(dmgsklpts) + "points.")
-                                            print("5. Fast Learner: " + str(fstlrnsklpts) + "points.")
-                                            skillupgr = input("Type in the number of the skill you want to upgrade.")
-                                            if skillupgr == 1 or skillupgr == 1.:
+                                            print("1. Life steal: " + str(lfstlsklpts) + " points.")
+                                            print("2. More Stamina: " + str(stmnsklpts) + " points.")
+                                            print("3. More Health: " + str(hpsklpts) + " points.")
+                                            print("4. Increase Damage: " + str(dmgsklpts) + " points.")
+                                            print("5. Fast Learner: " + str(fstlrnsklpts) + " points.")
+                                            skillupgr = input("Type in the number of the skill you want to upgrade.\n--->")
+                                            if skillupgr == "1" or skillupgr == "1.":
                                                 lfstlsklpts += 1
                                                 hpsteal += random.randint(1, 2)
                                                 upgrskl = "Life Steal"
@@ -374,7 +379,7 @@ def explore():
                                                 print(
                                                     f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
 
-                                            elif skillupgr == 2 or skillupgr == 2.:
+                                            elif skillupgr == "2" or skillupgr == "2.":
                                                 stmnsklpts += 1
                                                 stammax += random.randint(1, 3)
                                                 upgrskl = "More Stamina"
@@ -382,7 +387,7 @@ def explore():
                                                 print(
                                                     f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(stmnsklpts)}")
 
-                                            elif skillupgr == 3 or skillupgr == 3.:
+                                            elif skillupgr == "3" or skillupgr == "3.":
                                                 hpsklpts += 1
                                                 hpmax += random.randint(1, 2)
                                                 upgrskl = "More Health"
@@ -390,7 +395,7 @@ def explore():
                                                 print(
                                                     f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
 
-                                            elif skillupgr == 4 or skillupgr == 4.:
+                                            elif skillupgr == "4" or skillupgr == "4.":
                                                 dmgsklpts += 1
                                                 dmgplus += random.randint(1, 3)
                                                 upgrskl = "Increase Damage"
@@ -398,7 +403,7 @@ def explore():
                                                 print(
                                                     f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(dmgsklpts)}")
 
-                                            elif skillupgr == 5 or skillupgr == 5.:
+                                            elif skillupgr == "5" or skillupgr == "5.":
                                                 fstlrnsklpts += 1
                                                 xpplus += random.randint(0, 4)
                                                 upgrskl = "Fast Learner"
@@ -452,12 +457,12 @@ def explore():
                                                 stamina = stammax
                                                 xp = 0
                                                 level += 1
+                                                skillpts += 1
                                                 dmg += random.randint(1, 3)
                                                 endmg += random.randint(2, 7)
-                                                print(chname + " levelled up, and is on currently level " + str(
-                                                    level) + ".")
-                                                print(
-                                                    chname + " has " + skillpts + "skillpoints. Use the command <skills> to choose a new skill.")
+                                                print(chname + " levelled up, and is on currently level " + str(level) + ".")
+                                                print(f"{str(chname)} has {str(skillpts)} skillpoints.")
+                                                print("Use the command <skills> to choose a new skill.")
 
                                             if hp == 0:
                                                 print('You died. The Game is over!')
@@ -491,7 +496,6 @@ def explore():
                         except:
                             print('An error has occurred, please restart The Game!')
                     break
-
 
             elif q == 'quit':
                 print('You left The Game! Bye!')
