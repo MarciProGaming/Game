@@ -42,6 +42,7 @@ hp = 10
 xp = 0
 level = 0
 stamina = 15
+lastchance = 1
 
 last_auto_time = time.time()
 
@@ -153,6 +154,7 @@ def explore():
     global lfstlsklpts
     global dmgsklpts
     global upgrskl
+    global lastchance
 
     while True:
         try:
@@ -272,7 +274,7 @@ def explore():
                                 print('You attacked the enemy')
                                 xp += random.randint(1, 4) + xpplus
                                 hp -= endmg
-                                stamina -= 1
+                                stamina -= random.randint(1, 4)
                                 enhp -= dmg + dmgplus
                                 if enhp <= 0:
                                     print(chname + random.choice(ensucattack))
@@ -294,9 +296,15 @@ def explore():
                                     print(f"{str(chname)} has {str(skillpts)} skillpoints.")
                                     print("Use the command <skills> to choose a new skill.")
 
-                                if hp == 0:
-                                    print('You died. The Game is over!')
-                                    break
+                                if hp <= 0:
+                                    if lastchance == 1:
+                                        print(f"You need to rest NOW, or {str(chname)} will die!")
+                                        lastchance = 0
+                                        hp = 1
+                                    elif lastchance == 0:
+                                        print('You died. The Game is over!')
+                                        break
+
                                 elif hp < 3:
                                     print(chname + ' is low on health, and needs to rest.')
                                 elif stamina == 0:
@@ -309,6 +317,8 @@ def explore():
                             print(chname + random.choice(rest))
                             hp += random.randint(1, 5)
                             stamina += random.randint(4, 9)
+                            lastchance = 1
+
                             if hp > hpmax:
                                 hp = hpmax
                                 print(chname + "'s health is full.")
@@ -441,7 +451,7 @@ def explore():
                                             print('You attacked the enemy')
                                             xp += random.randint(1, 4) + xpplus
                                             hp -= endmg
-                                            stamina -= 1
+                                            stamina -= random.randint(1,4)
                                             enhp -= dmg + dmgplus
 
                                             if enhp <= 0:
@@ -464,9 +474,14 @@ def explore():
                                                 print(f"{str(chname)} has {str(skillpts)} skillpoints.")
                                                 print("Use the command <skills> to choose a new skill.")
 
-                                            if hp == 0:
-                                                print('You died. The Game is over!')
-                                                break
+                                            if hp <= 0:
+                                                if lastchance == 1:
+                                                    print(f"You need to rest NOW, or {str(chname)} will die!")
+                                                    lastchance = 0
+                                                    hp = 1
+                                                elif lastchance == 0:
+                                                    print('You died. The Game is over!')
+                                                    break
 
                                             elif hp < 3:
                                                 print(chname + ' is low on health, and needs to rest.')
@@ -482,6 +497,7 @@ def explore():
                                         print(chname + random.choice(rest))
                                         hp += random.randint(1, 5)
                                         stamina += random.randint(4, 9)
+                                        lastchance = 1
 
                                         if hp > hpmax:
                                             hp = hpmax
