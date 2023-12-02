@@ -45,8 +45,21 @@ stamina = 15
 
 last_auto_time = time.time()
 
+#Levels and skills
+skillpts = 0
 xpmin = 10
 tries = 0
+xpplus = 0
+dmgplus = 0
+hpmax = 10
+stammax = 15
+hpsteal = 0
+hpsklpts = 0
+stmnsklpts = 0
+fstlrnsklpts = 0
+lfstlsklpts = 0
+dmgsklpts = 0
+upgrskl = "none"
 
 # Enemy stats
 enhp = random.randint(1, 3)
@@ -54,6 +67,7 @@ endmg = random.randint(0, 1)
 
 def phaseOne():
     global chname
+    global ch
     chname = input('First, you need to give a name to your character.\n--->')
     print('Now you can list your characters statistics or you can start The Game.')
     while True:
@@ -99,8 +113,15 @@ rest = [' found nothing to rest on, so just stood by the wall and tried to fall 
         ' found a little rock, and rested for a half an hour.', ' found a big rock, and rested for a whole day.']
 enattack = [' damaged the enemy, but it is still alive.', ' tried to kill the enemy, but only did a small damage.']
 ensucattack = [' executed the enemy.', ' killed the enemy.', " cut off the enemy's head."]
+
+#Wizard
+#Berserker
+#Archer
+#Assassin
+
 enemy = [' found an angry Goblin.', ' has been attacked by a Little Dragon.']
-commands = ['help', 'quit', 'attack', 'rest', 'explore', 'stats', 'level', 'auto']
+commands = ['help', 'quit', 'attack', 'rest', 'explore', 'stats', 'level', 'auto', 'skills']
+skills = ['Life steal', 'More Stamina (1-2)', 'More Health (1-2)', 'Increase Damage (1-5)', 'Fast Learner']
 incombat = 0
 
 
@@ -120,6 +141,19 @@ def explore():
     global enhp
     global endmg
     global last_auto_time
+    global skillpts
+    global xpplus
+    global dmgplus
+    global hpmax
+    global stammax
+    global hpsteal
+    global hpsklpts
+    global stmnsklpts
+    global fstlrnsklpts
+    global lfstlsklpts
+    global dmgsklpts
+    global upgrskl
+
     while True:
         try:
             q = input(chname + random.choice(caveent) + "\n")
@@ -134,6 +168,52 @@ def explore():
 
                         if insc == 'help':
                             print(commands)
+
+                        elif insc == 'skills':
+                            if skillpts >= 1:
+                                print("1. Life steal: " + str(lfstlsklpts) + "points.")
+                                print("2. More Stamina: " + str(stmnsklpts) + "points.")
+                                print("3. More Health: " + str(hpsklpts) + "points.")
+                                print("4. Increase Damage: " + str(dmgsklpts) + "points.")
+                                print("5. Fast Learner: " + str(fstlrnsklpts) + "points.")
+                                skillupgr = input("Type in the number of the skill you want to upgrade.")
+                                if skillupgr == 1 or skillupgr == 1.:
+                                    lfstlsklpts += 1
+                                    hpsteal += random.randint(1,2)
+                                    upgrskl = "Life Steal"
+                                    skillpts -= 1
+                                    print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
+
+                                elif skillupgr == 2 or skillupgr == 2.:
+                                    stmnsklpts += 1
+                                    stammax += random.randint(1, 3)
+                                    upgrskl = "More Stamina"
+                                    skillpts -= 1
+                                    print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(stmnsklpts)}")
+
+                                elif skillupgr == 3 or skillupgr == 3.:
+                                    hpsklpts += 1
+                                    hpmax += random.randint(1,2)
+                                    upgrskl = "More Health"
+                                    skillpts -= 1
+                                    print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
+
+                                elif skillupgr == 4 or skillupgr == 4.:
+                                    dmgsklpts += 1
+                                    dmgplus += random.randint(1,3)
+                                    upgrskl = "Increase Damage"
+                                    skillpts -= 1
+                                    print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(dmgsklpts)}")
+
+                                elif skillupgr == 5 or skillupgr == 5.:
+                                    fstlrnsklpts += 1
+                                    xpplus += random.randint(0,4)
+                                    upgrskl = "Fast Learner"
+                                    skillpts -= 1
+                                    print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(fstlrnsklpts)}")
+
+                            else:
+                                print("You don't have any skillpoints.")
 
                         elif insc == 'auto':
                             current_time = time.time()
@@ -173,11 +253,12 @@ def explore():
 
                         elif insc == 'stats':
                             print('Character: ' + ch)
-                            print('HP: ' + str(hp))
-                            print('Stamina: ' + str(stamina))
-                            print('Damage: ' + str(dmg))
-                            print('XP: ' + str(xp))
+                            print('HP: ' + f"{str(hp)}/{str(hpmax)}")
+                            print('Stamina: ' + f"{str(stamina)}/{str(stammax)}")
+                            print('Damage: ' + f"{str(dmg)} + {str(dmgplus)}")
+                            print('XP: ' + f"{str(xp)} + {str(xpplus)}")
                             print('Level: ' + str(level))
+                            print('Skillpoints: ' + str(skillpts))
 
                         elif insc == 'level':
                             print('Level: ' + str(level))
@@ -189,10 +270,10 @@ def explore():
                                 print('There is no enemy to attack')
                             elif incombat == 1:
                                 print('You attacked the enemy')
-                                xp += random.randint(1, 4)
+                                xp += random.randint(1, 4) + xpplus
                                 hp -= endmg
                                 stamina -= 1
-                                enhp -= dmg
+                                enhp -= dmg + dmgplus
                                 if enhp <= 0:
                                     print(chname + random.choice(ensucattack))
                                     incombat = 0
@@ -200,13 +281,14 @@ def explore():
                                 elif enhp > 0:
                                     print(chname + random.choice(enattack))
                                 if xp >= 10:
-                                    hp = 10
-                                    stamina = 15
+                                    hp = hpmax
+                                    stamina = stammax
                                     xp = 0
                                     level += 1
                                     dmg += random.randint(1, 3)
-                                    endmg += random.randint (0, 2)
+                                    endmg += random.randint (2, 7)
                                     print(chname + " levelled up, and is on currently level " + str(level) + ".")
+                                    print(chname + " has " + skillpts + "skillpoints. Use the command <skills> to choose a new skill.")
                                 if hp == 0:
                                     print('You died. The Game is over!')
                                     break
@@ -222,11 +304,11 @@ def explore():
                             print(chname + random.choice(rest))
                             hp += random.randint(1, 5)
                             stamina += random.randint(4, 9)
-                            if hp > 10:
-                                hp = 10
+                            if hp > hpmax:
+                                hp = hpmax
                                 print(chname + "'s health is full.")
-                            if stamina > 15:
-                                stamina = 15
+                            if stamina > stammax:
+                                stamina = stammax
                                 print(chname + "'s stamina is full.")
                     except:
                         print('An error has occurred, please restart The Game!')
@@ -276,6 +358,54 @@ def explore():
                                         print('You leaved The Game! Bye!')
                                         break
 
+                                    elif insc == 'skills':
+                                        if skillpts >= 1:
+                                            print("1. Life steal: " + str(lfstlsklpts) + "points.")
+                                            print("2. More Stamina: " + str(stmnsklpts) + "points.")
+                                            print("3. More Health: " + str(hpsklpts) + "points.")
+                                            print("4. Increase Damage: " + str(dmgsklpts) + "points.")
+                                            print("5. Fast Learner: " + str(fstlrnsklpts) + "points.")
+                                            skillupgr = input("Type in the number of the skill you want to upgrade.")
+                                            if skillupgr == 1 or skillupgr == 1.:
+                                                lfstlsklpts += 1
+                                                hpsteal += random.randint(1, 2)
+                                                upgrskl = "Life Steal"
+                                                skillpts -= 1
+                                                print(
+                                                    f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
+
+                                            elif skillupgr == 2 or skillupgr == 2.:
+                                                stmnsklpts += 1
+                                                stammax += random.randint(1, 3)
+                                                upgrskl = "More Stamina"
+                                                skillpts -= 1
+                                                print(
+                                                    f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(stmnsklpts)}")
+
+                                            elif skillupgr == 3 or skillupgr == 3.:
+                                                hpsklpts += 1
+                                                hpmax += random.randint(1, 2)
+                                                upgrskl = "More Health"
+                                                skillpts -= 1
+                                                print(
+                                                    f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
+
+                                            elif skillupgr == 4 or skillupgr == 4.:
+                                                dmgsklpts += 1
+                                                dmgplus += random.randint(1, 3)
+                                                upgrskl = "Increase Damage"
+                                                skillpts -= 1
+                                                print(
+                                                    f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(dmgsklpts)}")
+
+                                            elif skillupgr == 5 or skillupgr == 5.:
+                                                fstlrnsklpts += 1
+                                                xpplus += random.randint(0, 4)
+                                                upgrskl = "Fast Learner"
+                                                skillpts -= 1
+                                                print(
+                                                    f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(fstlrnsklpts)}")
+
                                     elif insc == 'explore':
                                         if incombat == 1:
                                             print(chname + " is currently under attack, and can't go past the enemy.")
@@ -286,11 +416,12 @@ def explore():
 
                                     elif insc == 'stats':
                                         print('Character: ' + ch)
-                                        print('HP: ' + str(hp))
-                                        print('Stamina: ' + str(stamina))
-                                        print('Damage: ' + str(dmg))
-                                        print('XP: ' + str(xp))
+                                        print('HP: ' + f"{str(hp)}/{str(hpmax)}")
+                                        print('Stamina: ' + f"{str(stamina)}/{str(stammax)}")
+                                        print('Damage: ' + f"{str(dmg)} + {str(dmgplus)}")
+                                        print('XP: ' + f"{str(xp)} + {str(xpplus)}")
                                         print('Level: ' + str(level))
+                                        print('Skillpoints: ' + str(skillpts))
 
                                     elif insc == 'level':
                                         print('Level: ' + str(level))
@@ -300,35 +431,45 @@ def explore():
                                     elif insc == 'attack':
                                         if incombat == 0:
                                             print('There is no enemy to attack')
+
                                         elif incombat == 1:
                                             print('You attacked the enemy')
-                                            xp += random.randint(1, 4)
+                                            xp += random.randint(1, 4) + xpplus
                                             hp -= endmg
                                             stamina -= 1
-                                            enhp -= dmg
+                                            enhp -= dmg + dmgplus
+
                                             if enhp <= 0:
                                                 print(chname + random.choice(ensucattack))
                                                 incombat = 0
                                                 enhp = 0
+
                                             elif enhp > 0:
                                                 print(chname + random.choice(enattack))
+
                                             if xp >= 10:
-                                                hp = 10
-                                                stamina = 15
+                                                hp = hpmax
+                                                stamina = stammax
                                                 xp = 0
                                                 level += 1
                                                 dmg += random.randint(1, 3)
-                                                endmg += random.randint(0, 2)
+                                                endmg += random.randint(2, 7)
                                                 print(chname + " levelled up, and is on currently level " + str(
                                                     level) + ".")
+                                                print(
+                                                    chname + " has " + skillpts + "skillpoints. Use the command <skills> to choose a new skill.")
+
                                             if hp == 0:
                                                 print('You died. The Game is over!')
                                                 break
+
                                             elif hp < 3:
                                                 print(chname + ' is low on health, and needs to rest.')
+
                                             elif stamina == 0:
                                                 print(chname + ' had no more energy, fall asleep, and never woke up.')
                                                 break
+
                                             elif stamina < 3:
                                                 print(chname + ' is really tired, and needs to rest immediately!')
 
@@ -336,11 +477,13 @@ def explore():
                                         print(chname + random.choice(rest))
                                         hp += random.randint(1, 5)
                                         stamina += random.randint(4, 9)
-                                        if hp > 10:
-                                            hp = 10
+
+                                        if hp > hpmax:
+                                            hp = hpmax
                                             print(chname + "'s health is full.")
-                                        if stamina > 15:
-                                            stamina = 15
+
+                                        if stamina > stammax:
+                                            stamina = stammax
                                             print(chname + "'s stamina is full.")
                                 except:
                                     print('An error has occurred, please restart The Game!')
