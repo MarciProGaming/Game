@@ -369,7 +369,7 @@ def explore():
                 if tries == 5:
                     time.sleep(0.3)
                     print(chname + ' tried to avoid the cave, but stepped wrong and fell into the cave.')
-                    goto(166)
+                    goto(173)
         except:
             print('An error has occurred, please restart The Game!')
 
