@@ -63,6 +63,10 @@ lfstlsklpts = 0
 dmgsklpts = 0
 upgrskl = "none"
 
+#Final boss fight
+bosshp = 500
+bossdmg = 20
+
 # Enemy stats
 enhp = random.randint(1, 3)
 endmg = random.randint(0, 1)
@@ -125,8 +129,11 @@ archerskills = []
 #Assassin
 assassinskills = []
 
-enemy = [' found an angry Goblin.', ' has been attacked by a Little Dragon.']
-commands = ['help', 'quit', 'attack', 'rest', 'explore', 'stats', 'level', 'auto', 'skills']
+enemy = ['Goblin', 'Little Dragon', 'Golem', 'Zombie',]
+miniboss = [enemy, ]
+boss = [miniboss, ]
+finalboss = []
+commands = ['help', 'quit', 'attack', 'rest', 'explore', 'stats', 'level', 'auto', 'skills', 'endgame']
 skills = ['Life steal', 'More Stamina (1-2)', 'More Health (1-2)', 'Increase Damage (1-5)', 'Fast Learner']
 incombat = 0
 
@@ -164,6 +171,8 @@ def explore():
     global berserkerskills
     global assassinskills
     global archerskills
+    global bosshp
+    global bossdmg
 
     while True:
         try:
@@ -182,6 +191,7 @@ def explore():
                         elif insc == 'skills':
                             if skillpts >= 1:
                                 print("\n-----------------------------------------------------")
+                                print(f"Remaining skill points: {str(skillpts)}\n")
                                 print("1. Life steal: " + str(lfstlsklpts) + " points.")
                                 print("2. More Stamina: " + str(stmnsklpts) + " points.")
                                 print("3. More Health: " + str(hpsklpts) + " points.")
@@ -231,7 +241,156 @@ def explore():
                                 print("3. More Health: " + str(hpsklpts) + " points.")
                                 print("4. Increase Damage: " + str(dmgsklpts) + " points.")
                                 print("5. Fast Learner: " + str(fstlrnsklpts) + " points.")
+                                print("\nYou don't have any skill points.")
                                 print("-----------------------------------------------------\n")
+
+                        elif insc == 'endgame':
+                            if level >= "50":
+                                print("Are you sure you want to fight the final boss?")
+                                fnboss = input("Yes or No\n--->")
+                                if fnboss == "yes" or fnboss == "Yes":
+                                    incombat = 1
+                                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                                    print("\n-----------------------------------------------------")
+                                    print(f"{str(chname)} found a door-looking stone in a corner while exploring.")
+                                    time.sleep(3)
+                                    print(f"{str(chname)} got close and tried to push the 'door'. ")
+                                    time.sleep(3)
+                                    print("It had a really strange noise, and when opened a little wind came out.")
+                                    time.sleep(3)
+                                    print("It was cold, but felt really nice.")
+                                    time.sleep(3)
+                                    print("Suddenly a beam of sunlight lighted up the place.")
+                                    time.sleep(3)
+                                    print("It was a room, but it felt like it was for giants. Everything was huge.")
+                                    time.sleep(3)
+                                    print(f"{str(chname)} started walking inside the room.")
+                                    time.sleep(3)
+                                    print(f"Suddenly out of nowhere a giant got behind {str(chname)} and started talking.")
+                                    time.sleep(3)
+                                    print("\nGIANT - Who are you?")
+                                    time.sleep(3)
+                                    print(f"{str(chname)} - My name is {str(chname)}.")
+                                    time.sleep(3)
+                                    print("GIANT - And what are you doing here?")
+                                    time.sleep(3)
+                                    print(f"{str(chname)} - I don't really know, i just came through a door and found this place.")
+                                    time.sleep(3)
+                                    print("GIANT - Well, i don't like seeing anyone here.")
+                                    time.sleep(3)
+                                    print("GIANT - So you have 5 seconds to explain what you want or i'll kill you.")
+                                    time.sleep(3)
+                                    print("1. Would you like to fight the giant?")
+                                    print("2. Would you like to talk with him and try to be friendly?")
+                                    chend = input("You have to do something, but what will you choose? 1. or 2.?\n--->")
+                                    if chend == "1" or chend == "1.":
+                                        dmg = 500
+                                        print("You took out your sword and pointed it at the giant.")
+                                        time.sleep(3)
+                                        print(f"{str(chname)} - And what if i would like to stay here?")
+                                        time.sleep(3)
+                                        print("GIANT - Then sadly i have to end your life.")
+                                        time.sleep(3)
+                                        print("\n-----------------------------------------------------")
+                                        print("Enemy type: The Final Boss")
+                                        print(f"Boss health: {str(bosshp)}")
+                                        print(f"Boss damage: {str(bossdmg)}")
+                                        print("-----------------------------------------------------\n")
+                                        #FINAL FIGHT
+                                        while True:
+                                            try:
+                                                finalin = input("\n--->")
+                                                if finalin == "attack":
+                                                    hp -= bossdmg
+                                                    stamina -= random.randint(1, 4)
+                                                    bosshp -= dmg + dmgplus
+                                                    print('You attacked the boss')
+                                                    if bosshp <= 0:
+                                                        print("\n-----------------------------------------------------")
+                                                        print(f"{str(chname)} defeated the boss, who is now laying on the floor.")
+                                                        time.sleep(3)
+                                                        print("GIANT - Well, it seems like i've met my fate.")
+                                                        time.sleep(3)
+                                                        print(f"GIANT - But i would like to say something to you {str(chname)} before i go.")
+                                                        time.sleep(3)
+                                                        print("\nPrepare for your worst nightmares!\n")
+                                                        time.sleep(3)
+                                                        print("As the last words left the giants mouth, he started to slowly fade away.")
+                                                        time.sleep(3)
+                                                        print(f"{str(chname)} - Wait! WAIT! WHAT DO YOU MEAN BY THAT???")
+                                                        time.sleep(3)
+                                                        print(f"When {str(chname)} ended talking the giant fully disappeared.")
+                                                        time.sleep(3)
+                                                        #CREDITS
+
+
+                                                        print("-----------------------------------------------------\n")
+                                                        break
+
+                                                    elif bosshp > 0:
+                                                        hp += hpsteal
+                                                        if hp > hpmax:
+                                                            hp = hpmax
+                                                        finalbossdmg = bossdmg + hpsteal
+                                                        print("\n-----------------------------------------------------")
+                                                        print(f"Boss health: {str(bosshp)} (-{str(dmg + dmgplus)})")
+                                                        print(f"Your health: {str(hp)}/{str(hpmax)} (-{str(finalbossdmg)})")
+                                                        print(f"Your stamina: {str(stamina)}/{str(stammax)}")
+                                                        print("-----------------------------------------------------\n")
+
+                                                    if hp <= 0:
+                                                        if lastchance == 1:
+                                                            print(f"You need to rest NOW, or {str(chname)} will die!")
+                                                            lastchance = 0
+                                                            hp = 1
+                                                        elif lastchance == 0:
+                                                            print("You couldn't compete with the giants power and you died.")
+                                                            break
+
+                                                elif finalin == "rest":
+                                                    print(chname + random.choice(rest) + "\n")
+                                                    resthp = random.randint(5, 10)
+                                                    reststam = random.randint(5, 10)
+                                                    hp += resthp
+                                                    stamina += reststam
+                                                    lastchance = 1
+
+                                                    if hp < hpmax:
+                                                        print(f"+{str(resthp)} health")
+                                                    else:
+                                                        hp = hpmax
+                                                        print(f"{str(chname)}'s health is full")
+
+                                                    if stamina < stammax:
+                                                        print(f"+{str(reststam)} stamina\n")
+                                                    else:
+                                                        stamina = stammax
+                                                        print(f"{str(chname)}'s stamina is full")
+
+                                            except:
+                                                print("An error has occurred, please restart the game!")
+
+                                    elif chend == "2" or chend == "2.":
+                                        print(f"{str(chname)} - Wait! I can explain everything.")
+                                        time.sleep(1)
+                                        print(f"{str(chname)} - Just hear me out")
+                                        time.sleep(1)
+                                        print("GIANT - I'm sorry but your time is over.")
+                                        time.sleep(1)
+                                        print("The giant picked you up and started to walk into the darkness.")
+                                        time.sleep(1)
+                                        print("Neither you nor the giant was seen ever again.")
+                                        time.sleep(1)
+                                        #CREDITS
+
+
+
+                                        break
+                                    print("-----------------------------------------------------\n")
+                                else:
+                                    print(f"{str(chname)} choose to back down from the boss.")
+                            else:
+                                print("You need to be at least on level 50 to start the final boss fight.")
 
                         elif insc == 'auto':
                             current_time = time.time()
@@ -257,6 +416,9 @@ def explore():
                             else:
                                 print(f"You need to wait {int(time_remaining)} seconds before using auto mode again.")
 
+                        elif insc == 'levelup':
+                            level = input("---->")
+
                         elif insc == 'quit':
                             print('You leaved The Game! Bye!')
                             break
@@ -265,9 +427,17 @@ def explore():
                             if incombat == 1:
                                 print(chname + " is currently under attack, and can't go past the enemy.")
                             elif incombat == 0:
-                                print(chname + random.choice(enemy))
-                                incombat = 1
+                                currentenemy = random.choice(enemy)
                                 enhp = random.randint(3, 15)
+                                if currentenemy == "Maxim":
+                                    enhp = 200
+                                    endmg = 5
+                                print(chname + " found an enemy.")
+                                print("\n-----------------------------------------------------")
+                                print(f"Enemy type: {str(currentenemy)}")
+                                print(f"Health: {str(enhp)}")
+                                print("-----------------------------------------------------\n")
+                                incombat = 1
 
                         elif insc == 'stats':
                             print("\n-----------------------------------------------------")
@@ -289,13 +459,16 @@ def explore():
                             if incombat == 0:
                                 print('There is no enemy to attack')
                             elif incombat == 1:
-                                print('You attacked the enemy')
-                                xp += random.randint(1, 4) + xpplus
+                                xpgain = random.randint(1, 4) + xpplus
+                                xp += xpgain
                                 hp -= endmg
                                 stamina -= random.randint(1, 4)
                                 enhp -= dmg + dmgplus
+                                print('You attacked the enemy')
                                 if enhp <= 0:
-                                    print(chname + random.choice(ensucattack))
+                                    print("\n-----------------------------------------------------")
+                                    print(f"{str(chname)}{str(random.choice(ensucattack))}")
+                                    print("-----------------------------------------------------\n")
                                     incombat = 0
                                     enhp = 0
 
@@ -303,10 +476,12 @@ def explore():
                                     hp += hpsteal
                                     if hp > hpmax:
                                         hp = hpmax
+                                    finaldmg = endmg + hpsteal
                                     print("\n-----------------------------------------------------")
                                     print(f"Enemy health: {str(enhp)} (-{str(dmg + dmgplus)})")
-                                    print(f"Your health: {str(hp)}/{str(hpmax)} (-{str(endmg)}) (+{str(hpsteal)})")
+                                    print(f"Your health: {str(hp)}/{str(hpmax)} (-{str(finaldmg)})")
                                     print(f"Your stamina: {str(stamina)}/{str(stammax)}")
+                                    print(f"Gained Experience: {str(xpgain)} XP")
                                     print("-----------------------------------------------------\n")
                                 if xp >= 10:
                                     hp = hpmax
