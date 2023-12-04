@@ -321,10 +321,60 @@ def explore():
                                                         time.sleep(3)
                                                         print(f"When {str(chname)} ended talking the giant fully disappeared.")
                                                         time.sleep(3)
-                                                        #CREDITS
-
-
                                                         print("-----------------------------------------------------\n")
+                                                        print("\n\n\n\n\n\n-------------------------------")
+                                                        print("          Game Credits")
+                                                        print("-------------------------------\n")
+
+                                                        print("**Game Development Team:**\n")
+
+                                                        print("**Lead Developer:**")
+                                                        print("Polyák Marcell\n")
+
+                                                        print("**Game Designers:**")
+                                                        print("Molnár Maxim")
+                                                        print("Polyák Marcell\n")
+
+                                                        print("**Programmers:**")
+                                                        print("Molnár Maxim")
+                                                        print("Polyák Marcell\n")
+
+#                                                        print("**Quality Assurance:**")
+#                                                        print("[QA Tester 1 Name]")
+#                                                        print("[QA Tester 2 Name]\n")
+
+ #                                                       print("-------------------------------\n")
+
+#                                                        print("**Special Thanks:**\n")
+
+#                                                        print("[Special Thanks 1]")
+#                                                        print("[Special Thanks 2]")
+#                                                        print("[Special Thanks 3]\n")
+
+#                                                        print("-------------------------------\n")
+
+#                                                        print("**Music:**")
+#                                                       print("[Composer Name]\n")
+
+#                                                        print("**Sound Effects:**")
+#                                                        print("[Sound Effects Artist Name]\n")
+
+#                                                        print("-------------------------------\n")
+
+#                                                       print("**Additional Contributors:**\n")
+
+#                                                        print(
+#                                                            "[List any other individuals or organizations that contributed to the game.]\n")
+
+#                                                        print("-------------------------------\n")
+
+#                                                        print("**Powered by:**")
+#                                                        print("[Game Engine/Library Used, if applicable]\n")
+
+#                                                        print("-------------------------------\n")
+
+                                                        print("Thank you to our players and supporters for making this game possible!\n")
+                                                        print("© 2023 Realms of Adventures. All Rights Reserved.")
                                                         break
 
                                                     elif bosshp > 0:
@@ -372,18 +422,68 @@ def explore():
 
                                     elif chend == "2" or chend == "2.":
                                         print(f"{str(chname)} - Wait! I can explain everything.")
-                                        time.sleep(1)
+                                        time.sleep(3)
                                         print(f"{str(chname)} - Just hear me out")
-                                        time.sleep(1)
+                                        time.sleep(3)
                                         print("GIANT - I'm sorry but your time is over.")
-                                        time.sleep(1)
+                                        time.sleep(3)
                                         print("The giant picked you up and started to walk into the darkness.")
-                                        time.sleep(1)
+                                        time.sleep(3)
                                         print("Neither you nor the giant was seen ever again.")
-                                        time.sleep(1)
-                                        #CREDITS
+                                        time.sleep(3)
+                                        print("\n\n\n\n\n\n-------------------------------")
+                                        print("          Game Credits")
+                                        print("-------------------------------\n")
+                                        time.sleep(3)
+                                        print("**Game Development Team:**\n")
+                                        time.sleep(3)
+                                        print("**Lead Developer:**")
+                                        print("Polyák Marcell\n")
+                                        time.sleep(3)
+                                        print("**Game Designers:**")
+                                        print("Molnár Maxim")
+                                        print("Polyák Marcell\n")
+                                        time.sleep(3)
+                                        print("**Programmers:**")
+                                        print("Molnár Maxim")
+                                        print("Polyák Marcell\n")
+                                        time.sleep(3)
+#                                       print("**Quality Assurance:**")
+#                                       print("[QA Tester 1 Name]")
+#                                       print("[QA Tester 2 Name]\n")
 
+#                                       print("-------------------------------\n")
 
+#                                       print("**Special Thanks:**\n")
+
+#                                       print("[Special Thanks 1]")
+#                                       print("[Special Thanks 2]")
+#                                       print("[Special Thanks 3]\n")
+
+#                                       print("-------------------------------\n")
+
+#                                       print("**Music:**")
+#                                       print("[Composer Name]\n")
+
+#                                       print("**Sound Effects:**")
+#                                       print("[Sound Effects Artist Name]\n")
+
+#                                       print("-------------------------------\n")
+
+#                                        print("**Additional Contributors:**\n")
+
+#                                        print(
+#                                           "[List any other individuals or organizations that contributed to the game.]\n")
+
+#                                        print("-------------------------------\n")
+
+#                                        print("**Powered by:**")
+#                                        print("[Game Engine/Library Used, if applicable]\n")
+
+#                                        print("-------------------------------\n")
+
+                                        print("Thank you to our players and supporters for making this game possible!\n")
+                                        print("© 2023 Realms of Adventures. All Rights Reserved.")
 
                                         break
                                     print("-----------------------------------------------------\n")
