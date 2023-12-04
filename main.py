@@ -334,10 +334,15 @@ def explore():
                                                         print("**Game Designers:**")
                                                         print("Molnár Maxim")
                                                         print("Polyák Marcell\n")
+                                                        print("Tóth Ádám")
 
                                                         print("**Programmers:**")
                                                         print("Molnár Maxim")
                                                         print("Polyák Marcell\n")
+
+                                                        print("**Artists:**")
+                                                        print("Tóth Ádám")
+#                                                        print("[Artist 2 Name]\n")
 
 #                                                        print("**Quality Assurance:**")
 #                                                        print("[QA Tester 1 Name]")
