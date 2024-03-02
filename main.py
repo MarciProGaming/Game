@@ -556,9 +556,11 @@ def explore():
                             print("-----------------------------------------------------\n")
 
                         elif insc == 'level':
+                            print("\n-----------------------------------------------------")
                             print('Level: ' + str(level))
                             print('Enemy HP: ' + str(enhp))
                             print('Enemy damage: ' + str(endmg))
+                            print("-----------------------------------------------------\n")
 
                         elif insc == 'attack':
                             if incombat == 0:
