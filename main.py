@@ -62,6 +62,10 @@ fstlrnsklpts = 0
 lfstlsklpts = 0
 dmgsklpts = 0
 upgrskl = "none"
+xpupgrd = [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7]
+gold = 0
+goldbonus = 0
+armor = 0
 
 #Final boss fight
 bosshp = 500
@@ -70,6 +74,9 @@ bossdmg = 20
 # Enemy stats
 enhp = random.randint(1, 3)
 endmg = random.randint(0, 1)
+
+# Buyable items
+level1 = []
 
 def phaseOne():
     global chname
@@ -173,6 +180,9 @@ def explore():
     global archerskills
     global bosshp
     global bossdmg
+    global gold
+    global goldbonus
+    global armor
 
     while True:
         try:
@@ -186,7 +196,18 @@ def explore():
                         insc = input('--->')
 
                         if insc == 'help':
-                            print(f"\n {str(commands)}\n")
+                            print("\n-----------------------------------------------------")
+                            print("help - Lists the available commands and actions.")
+                            print("quit - Closes the game.")
+                            print("attack - Performs an attack if there is an enemy.")
+                            print("rest - Regenerates health and stamina.")
+                            print("explore - Searches for an enemy to attack.")
+                            print("stats - Lists out the statistics of the character.")
+                            print("level - Shows informations about the current enemy.")
+                            print("auto - Automatically kills enemies, and levels you up.")
+                            print("skills - Show a list of skills you can choose from, when having enough points.")
+                            print("shop - Shows items that are available for purchase.")
+                            print("-----------------------------------------------------\n")
 
                         elif insc == 'skills':
                             if skillpts >= 1:
@@ -568,7 +589,8 @@ def explore():
                             elif incombat == 1:
                                 xpgain = random.randint(1, 4) + xpplus
                                 xp += xpgain
-                                hp -= endmg
+                                armoreddmg = endmg - armor
+                                hp -= armoreddmg
                                 stamina -= random.randint(1, 4)
                                 enhp -= dmg + dmgplus
                                 print('You attacked the enemy')
@@ -581,27 +603,42 @@ def explore():
 
                                 elif enhp > 0:
                                     hp += hpsteal
+                                    goldearned = random.randint(0, 3) + goldbonus
                                     if hp > hpmax:
                                         hp = hpmax
-                                    finaldmg = endmg + hpsteal
+                                    finaldmg = endmg - armor + hpsteal
                                     print("\n-----------------------------------------------------")
                                     print(f"Enemy health: {str(enhp)} (-{str(dmg + dmgplus)})")
                                     print(f"Your health: {str(hp)}/{str(hpmax)} (-{str(finaldmg)})")
                                     print(f"Your stamina: {str(stamina)}/{str(stammax)}")
                                     print(f"Gained Experience: {str(xpgain)} XP")
+                                    print(f"Gold coins: {str(gold)} (+{str(goldearned)})")
                                     print("-----------------------------------------------------\n")
-                                if xp >= 10:
+                                if xp >= xpmin:
+                                    xpmin = xpmin*random.choice(xpupgrd)
                                     hp = hpmax
                                     stamina = stammax
                                     xp = 0
                                     level += 1
                                     if level >= 3:
-                                        endmg += random.randint(1, 3)
+                                        endmg += random.randint(1, 4)
+                                    elif level >= 5:
+                                        endmg += random.randint(1, 6)
+                                    elif level >= 10:
+                                        endmg += random.randint(3, 10)
+                                    elif level >= 15:
+                                        endmg += random.randint(5, 13)
+                                    elif level >= 20:
+                                        endmg += random.randint(7, 16)
+                                    elif level >= 25:
+                                        endmg += random.randint(9, 20)
+                                    elif level >= 50:
+                                        endmg += random.randint(20, 50)
                                     skillpts += 1
                                     dmg += random.randint(1, 3)
                                     print(chname + " levelled up, and is on currently level " + str(
                                         level) + ".")
-                                    print(f"{str(chname)} has {str(skillpts)} skillpoints.")
+                                    print(f"{str(chname)} has {str(skillpts)} skill points.")
                                     print("Use the command <skills> to choose a new skill.")
 
                                 if hp <= 0:
@@ -641,6 +678,11 @@ def explore():
                                 stamina = stammax
                                 print(f"{str(chname)}'s stamina is full")
 
+                        elif insc == 'shop':
+                            if level <= 3:
+                                print()
+
+
                     except:
                         print('An error has occurred, please restart The Game!')
                 break
@@ -651,7 +693,7 @@ def explore():
                 if tries == 5:
                     time.sleep(0.3)
                     print(chname + ' tried to avoid the cave, but stepped wrong and fell into the cave.')
-                    goto(173)
+                    goto(191)
         except:
             print('An error has occurred, please restart The Game!')
 
