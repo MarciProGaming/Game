@@ -170,6 +170,7 @@ def print_stats():
     print('XP: ' + f"{str(xp)} + {str(xpplus)}")
     print('Level: ' + str(level))
     print('Skillpoints: ' + str(skillpts))
+    print('Gold: ' + f"{str(gold)} coins")
     print("-----------------------------------------------------\n")
 
 def print_quit():
