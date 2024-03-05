@@ -129,20 +129,19 @@ enattack = [' damaged the enemy, but it is still alive.', ' tried to kill the en
 ensucattack = [' executed the enemy.', ' killed the enemy.', " cut off the enemy's head."]
 
 #Wizard
-wizardskills = []
-#Berserker
-berserkerskills = []
-#Archer
-archerskills = []
-#Assassin
-assassinskills = []
 
+#Berserker
+
+#Archer
+
+#Assassin
+
+
+#Enemies
 enemy = ['Goblin', 'Little Dragon', 'Golem', 'Zombie',]
 miniboss = [enemy, ]
 boss = [miniboss, ]
 finalboss = []
-commands = ['help', 'quit', 'attack', 'rest', 'explore', 'stats', 'level', 'auto', 'skills', 'endgame']
-skills = ['Life steal', 'More Stamina (1-2)', 'More Health (1-2)', 'Increase Damage (1-5)', 'Fast Learner']
 incombat = 0
 
 
