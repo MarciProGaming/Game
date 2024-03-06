@@ -5,17 +5,16 @@ import threading
 from goto_py import goto
 
 
-def gameStart():
+def gamestart():
     # Welcome message
     print("Welcome to The Game.")
     time.sleep(1)
 
     # Character choose
     print('There are 4 characters from which you can chose one.\nI. Wizard\nII. Berserker\nIII. Archer\nIV. Assassin')
-    global ch
     while True:
         try:
-            ch = input('Please choose the character by writing their name.\n---> ')
+            ch: str = input('Please choose the character by writing their name.\n---> ')
             # Wizard
             if ch == "Wizard":
                 print("You've chosen the character: Wizard")
@@ -37,49 +36,58 @@ def gameStart():
         continue
 
 
-gameStart()
-
-# Stats
-dmg = 1
-hp = 10
-xp = 0
-level = 0
-stamina = 15
-lastchance = 1
+gamestart()
 
 
-#Levels and skills
-skillpts = 0
-xpmin = 10
+class GameCharacter:
+    def __init__(self, chname, skillpts):
+        self.name = chname
+        self.hp = 10
+        self.stamina = 15
+        self.dmg = 1
+        self.xp = 0
+        self.level = 0
+        self.skillpts = skillpts
+        self.gold = 0
+
+
+class Game:
+    def __init__(self):
+        self.character = ch
+        self.incombat = 0
+        self.enhp = random.randint(1, 3)
+        self.endmg = random.randint(0, 1)
+        self.xpmin = 10
+        self.xpupgrd = [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7]
+        self.lastchance = 1
+        self.armor = 0
+        self.hpmax = 10
+        self.stammax = 15
+        self.dmgplus = 0
+        self.xpplus = 0
+        self.hpsteal = 0
+        self.lfstlsklpts = 0
+        self.stmnsklpts = 0
+        self.hpsklpts = 0
+        self.dmgsklpts = 0
+        self.fstlrnsklpts = 0
+        self.skillpts = 0
+        self.goldbonus = 0
+        self.enemy = ["Goblin", "Skeleton", "Orc", "Troll", "Dragon"]
+        self.ensucattack = [" defeated the enemy!", " crushed the foe!", " emerged victorious!", " overcame the enemy!"]
+        self.rest = [" rested under a tree.", " found a cozy spot and took a nap.", " laid down to rest for a while."]
+
+
+# Levels and skills
 tries = 0
-xpplus = 0
-dmgplus = 0
-hpmax = 10
-stammax = 15
-hpsteal = 0
-hpsklpts = 0
-stmnsklpts = 0
-fstlrnsklpts = 0
-lfstlsklpts = 0
-dmgsklpts = 0
 upgrskl = "none"
-xpupgrd = [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7]
-gold = 0
-goldbonus = 0
-armor = 0
 
-#Final boss fight
+# Final boss fight
 bosshp = 500
 bossdmg = 20
 
-# Enemy stats
-enhp = random.randint(1, 3)
-endmg = random.randint(0, 1)
 
-# Buyable items
-level1 = ["Bronze sword", "bow"]
-
-def phaseOne():
+def phaseone():
     global chname
     global ch
     chname = input('First, you need to give a name to your character.\n--->')
@@ -114,8 +122,7 @@ def phaseOne():
         continue
 
 
-
-phaseOne()
+phaseone()
 
 answers = [' explores a twisty passage.', ' found a little underground pond.']
 caveent = [' found a dark cave entrance. Do you want to go in? (yes or no)',
@@ -127,22 +134,6 @@ rest = [' found nothing to rest on, so just stood by the wall and tried to fall 
         ' found a little rock, and rested for a half an hour.', ' found a big rock, and rested for a whole day.']
 enattack = [' damaged the enemy, but it is still alive.', ' tried to kill the enemy, but only did a small damage.']
 ensucattack = [' executed the enemy.', ' killed the enemy.', " cut off the enemy's head."]
-
-#Wizard
-
-#Berserker
-
-#Archer
-
-#Assassin
-
-
-#Enemies
-enemy = ['Goblin', 'Little Dragon', 'Golem', 'Zombie',]
-miniboss = [enemy, ]
-boss = [miniboss, ]
-finalboss = []
-incombat = 0
 
 
 def print_help():
@@ -160,20 +151,23 @@ def print_help():
     print("shop - Browse buyable items.")
     print("-----------------------------------------------------\n")
 
-def print_stats():
+
+def print_stats(self):
     print("\n-----------------------------------------------------")
-    print('Character: ' + ch)
-    print('HP: ' + f"{str(hp)}/{str(hpmax)}")
-    print('Stamina: ' + f"{str(stamina)}/{str(stammax)}")
-    print('Damage: ' + f"{str(dmg)} + {str(dmgplus)}")
-    print('XP: ' + f"{str(xp)} + {str(xpplus)}")
-    print('Level: ' + str(level))
-    print('Skillpoints: ' + str(skillpts))
-    print('Gold: ' + f"{str(gold)} gold coin(s)")
+    print('Character: ' + self.name)
+    print('HP: ' + f"{str(self.hp)}/{str(self.hpmax)}")
+    print('Stamina: ' + f"{str(self.stamina)}/{str(self.stammax)}")
+    print('Damage: ' + f"{str(self.dmg)} + {str(self.dmgplus)}")
+    print('XP: ' + f"{str(self.xp)} + {str(self.xpplus)}")
+    print('Level: ' + str(self.level))
+    print('Skill points: ' + str(self.skillpts))
+    print('Gold: ' + f"{str(self.gold)} gold coin(s)")
     print("-----------------------------------------------------\n")
+
 
 def print_quit():
     print('You left The Game! Bye!')
+
 
 def print_level():
     print("\n-----------------------------------------------------")
@@ -182,99 +176,113 @@ def print_level():
     print('Enemy damage: ' + str(endmg))
     print("-----------------------------------------------------\n")
 
-def print_skills():
-    global skillpts, lfstlsklpts, stmnsklpts, hpsklpts, dmgsklpts, fstlrnsklpts, hpsteal, stammax, hpmax, dmgplus, xpplus
-    if skillpts >= 1:
-        print("\n-----------------------------------------------------")
-        print(f"Remaining skill points: {str(skillpts)}\n")
-        print("1. Life steal: " + str(lfstlsklpts) + " points.")
-        print("2. More Stamina: " + str(stmnsklpts) + " points.")
-        print("3. More Health: " + str(hpsklpts) + " points.")
-        print("4. Increase Damage: " + str(dmgsklpts) + " points.")
-        print("5. Fast Learner: " + str(fstlrnsklpts) + " points.")
-        print("-----------------------------------------------------\n")
-        skillupgr = input("Type in the number of the skill you want to upgrade.\n--->")
-        if skillupgr == "1" or skillupgr == "1.":
-            lfstlsklpts += 1
-            hpsteal += random.randint(1, 2)
-            upgrskl = "Life Steal"
-            skillpts -= 1
-            print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(lfstlsklpts)}")
 
-        elif skillupgr == "2" or skillupgr == "2.":
-            stmnsklpts += 1
-            stammax += random.randint(1, 3)
-            upgrskl = "More Stamina"
-            skillpts -= 1
-            print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(stmnsklpts)}")
+class SkillsManager:
+    def __init__(self):
+        self.skillpts = 0
+        self.lfstlsklpts = 0
+        self.stmnsklpts = 0
+        self.hpsklpts = 0
+        self.dmgsklpts = 0
+        self.fstlrnsklpts = 0
+        self.hpsteal = 0
+        self.stammax = 0
+        self.hpmax = 0
+        self.dmgplus = 0
+        self.xpplus = 0
 
-        elif skillupgr == "3" or skillupgr == "3.":
-            hpsklpts += 1
-            hpmax += random.randint(1, 2)
-            upgrskl = "More Health"
-            skillpts -= 1
-            print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(hpsklpts)}")
-
-        elif skillupgr == "4" or skillupgr == "4.":
-            dmgsklpts += 1
-            dmgplus += random.randint(1, 3)
-            upgrskl = "Increase Damage"
-            skillpts -= 1
-            print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(dmgsklpts)}")
-
-        elif skillupgr == "5" or skillupgr == "5.":
-            fstlrnsklpts += 1
-            xpplus += random.randint(0, 4)
-            upgrskl = "Fast Learner"
-            skillpts -= 1
-            print(f"You upgraded the skill [{str(upgrskl)}]. It is now on level {str(fstlrnsklpts)}")
-
-    else:
-        print("\n-----------------------------------------------------")
-        print("1. Life steal: " + str(lfstlsklpts) + " points.")
-        print("2. More Stamina: " + str(stmnsklpts) + " points.")
-        print("3. More Health: " + str(hpsklpts) + " points.")
-        print("4. Increase Damage: " + str(dmgsklpts) + " points.")
-        print("5. Fast Learner: " + str(fstlrnsklpts) + " points.")
-        print("\nYou don't have any skill points.")
-        print("-----------------------------------------------------\n")
-
-def print_auto():
-    global hp, stamina, level
-
-    last_auto_time = time.time()
-    current_time = time.time()
-    time_difference = current_time - last_auto_time
-    time_remaining = 600 - time_difference
-
-    if time_remaining <= 0:
-        print("\nYou're about to turn auto mode on.")
-        print("--- This will reduce your life and stamina to 1. ---")
-        print("Auto mode is usable every 10 minutes.")
-        automode = input("Are you sure you want to use auto mode? (yes or no)\n--->")
-
-        if automode == 'yes' or automode == 'Yes':
-            hp = 1
-            stamina = 1
-            autolvls = random.randint(2, 5)
-            level += autolvls
-            print(f"\n{str(chname)} levelled up and is now on level {str(level)}.")
+    def print_skills(self):
+        global upgrskl
+        if self.skillpts >= 1:
+            print("\n-----------------------------------------------------")
+            print(f"Remaining skill points: {self.skillpts}\n")
+            print("1. Life steal:", self.lfstlsklpts, "points.")
+            print("2. More Stamina:", self.stmnsklpts, "points.")
+            print("3. More Health:", self.hpsklpts, "points.")
+            print("4. Increase Damage:", self.dmgsklpts, "points.")
+            print("5. Fast Learner:", self.fstlrnsklpts, "points.")
+            print("-----------------------------------------------------\n")
+            skillupgr = input("Type in the number of the skill you want to upgrade.\n--->")
+            if skillupgr in {"1", "1."}:
+                self.lfstlsklpts += 1
+                self.hpsteal += random.randint(1, 2)
+                upgrskl = "Life Steal"
+            elif skillupgr in {"2", "2."}:
+                self.stmnsklpts += 1
+                self.stammax += random.randint(1, 3)
+                upgrskl = "More Stamina"
+            elif skillupgr in {"3", "3."}:
+                self.hpsklpts += 1
+                self.hpmax += random.randint(1, 2)
+                upgrskl = "More Health"
+            elif skillupgr in {"4", "4."}:
+                self.dmgsklpts += 1
+                self.dmgplus += random.randint(1, 3)
+                upgrskl = "Increase Damage"
+            elif skillupgr in {"5", "5."}:
+                self.fstlrnsklpts += 1
+                self.xpplus += random.randint(0, 4)
+                upgrskl = "Fast Learner"
+            self.skillpts -= 1
+            print(f"You upgraded the skill [{upgrskl}]. It is now on level {getattr(self, upgrskl.lower() + 'pts')}")
 
         else:
-            print("Auto mode cancelled.")
-    else:
-        print(f"You need to wait {int(time_remaining)} seconds before using auto mode again.")
+            print("\n-----------------------------------------------------")
+            print("1. Life steal:", self.lfstlsklpts, "points.")
+            print("2. More Stamina:", self.stmnsklpts, "points.")
+            print("3. More Health:", self.hpsklpts, "points.")
+            print("4. Increase Damage:", self.dmgsklpts, "points.")
+            print("5. Fast Learner:", self.fstlrnsklpts, "points.")
+            print("\nYou don't have any skill points.")
+            print("-----------------------------------------------------\n")
 
-def print_explore():
+
+skills_manager = SkillsManager()
+skills_manager.print_skills()
+
+
+class AutoModeManager:
+    def __init__(self, hp, stamina, level):
+        self.hp = hp
+        self.stamina = stamina
+        self.level = level
+
+    def print_auto(self):
+        last_auto_time = time.time()
+        current_time = time.time()
+        time_difference = current_time - last_auto_time
+        time_remaining = 600 - time_difference
+
+        if time_remaining <= 0:
+            print("\nYou're about to turn auto mode on.")
+            print("--- This will reduce your life and stamina to 1. ---")
+            print("Auto mode is usable every 10 minutes.")
+            automode = input("Are you sure you want to use auto mode? (yes or no)\n--->")
+
+            if automode.lower() == 'yes':
+                self.hp = 1
+                self.stamina = 1
+                autolvls = random.randint(2, 5)
+                self.level += autolvls
+                print(f"\nYour character levelled up and is now on level {self.level}.")
+
+            else:
+                print("Auto mode cancelled.")
+        else:
+            print(f"You need to wait {int(time_remaining)} seconds before using auto mode again.")
+
+
+auto_mode_manager = AutoModeManager()
+auto_mode_manager.print_auto()
+
+
+def print_explore(self):
     global incombat, enhp, endmg
     if incombat == 1:
         print(chname + " is currently under attack, and can't go past the enemy.")
     elif incombat == 0:
-        currentenemy = random.choice(enemy)
+        currentenemy = random.choice(self.enemy)
         enhp = random.randint(3, 15)
-        if currentenemy == "Maxim":
-            enhp = 200
-            endmg = 5
         print(chname + " found an enemy.")
         print("\n-----------------------------------------------------")
         print(f"Enemy type: {str(currentenemy)}")
@@ -282,7 +290,8 @@ def print_explore():
         print("-----------------------------------------------------\n")
         incombat = 1
 
-def print_attack():
+
+def print_attack(self):
     global incombat, xp, endmg, hp, stamina, enhp, xpmin, level, skillpts, lastchance, dmg, gold
     if incombat == 0:
         print('There is no enemy to attack')
@@ -316,7 +325,7 @@ def print_attack():
             print(f"Gold coins: {str(gold)} (+{str(goldearned)})")
             print("-----------------------------------------------------\n")
         if xp >= xpmin:
-            xpmin = xpmin * random.choice(xpupgrd)
+            xpmin = xpmin * random.choice(self.xpupgrd)
             hp = hpmax
             stamina = stammax
             xp = 0
@@ -358,6 +367,7 @@ def print_attack():
         elif stamina < 3:
             print(chname + ' is really tired, and needs to rest immediately!')
 
+
 def print_rest():
     global stamina, hp, lastchance
     print(chname + random.choice(rest) + "\n")
@@ -379,17 +389,26 @@ def print_rest():
         stamina = stammax
         print(f"{str(chname)}'s stamina is full")
 
+
 def print_shop():
     shop.run_shop()
+
+
 class Shop:
     def __init__(self):
         self.all_items = [
-            {"name": "Common Item 1", "rarity": "Common", "price": 10, "dmgplus": 2, "goldbonus": 0, "armorplus": 2, "item_type": "armor"},
-            {"name": "Common Item 2", "rarity": "Common", "price": 10, "dmgplus": 1, "goldbonus": 0, "armorplus": 0, "item_type": "weapon"},
-            {"name": "Uncommon Item 1", "rarity": "Uncommon", "price": 20, "dmgplus": 4, "goldbonus": 0, "armorplus": 2, "item_type": "armor"},
-            {"name": "Uncommon Item 2", "rarity": "Uncommon", "price": 20, "dmgplus": 3, "goldbonus": 0, "armorplus": 0, "item_type": "weapon"},
-            {"name": "Rare Item 1", "rarity": "Rare", "price": 30, "dmgplus": 6, "goldbonus": 2, "armorplus": 2, "item_type": "armor"},
-            {"name": "Rare Item 2", "rarity": "Rare", "price": 30, "dmgplus": 5, "goldbonus": 1, "armorplus": 0, "item_type": "weapon"},
+            {"name": "Common Item 1", "rarity": "Common", "price": 10, "dmgplus": 2, "goldbonus": 0, "armorplus": 2,
+             "item_type": "armor"},
+            {"name": "Common Item 2", "rarity": "Common", "price": 10, "dmgplus": 1, "goldbonus": 0, "armorplus": 0,
+             "item_type": "weapon"},
+            {"name": "Uncommon Item 1", "rarity": "Uncommon", "price": 20, "dmgplus": 4, "goldbonus": 0, "armorplus": 2,
+             "item_type": "armor"},
+            {"name": "Uncommon Item 2", "rarity": "Uncommon", "price": 20, "dmgplus": 3, "goldbonus": 0, "armorplus": 0,
+             "item_type": "weapon"},
+            {"name": "Rare Item 1", "rarity": "Rare", "price": 30, "dmgplus": 6, "goldbonus": 2, "armorplus": 2,
+             "item_type": "armor"},
+            {"name": "Rare Item 2", "rarity": "Rare", "price": 30, "dmgplus": 5, "goldbonus": 1, "armorplus": 0,
+             "item_type": "weapon"},
         ]
         self.current_items = []
         self.refresh_time = 5 * 60  # 5 minutes in seconds
@@ -404,9 +423,11 @@ class Shop:
         print("----- Shop -----")
         for i, item in enumerate(self.current_items, 1):
             if item['item_type'] == "weapon":
-                print(f"{i}. {item['name']} ({item['rarity']}) Damage: +{item['dmgplus']} - Price: {item['price']} gold.")
+                print(
+                    f"{i}. {item['name']} ({item['rarity']}) Damage: +{item['dmgplus']} - Price: {item['price']} gold.")
             else:
-                print(f"{i}. {item['name']} ({item['rarity']}) Armor: +{item['armorplus']} - Price: {item['price']} gold.")
+                print(
+                    f"{i}. {item['name']} ({item['rarity']}) Armor: +{item['armorplus']} - Price: {item['price']} gold.")
         print("----------------")
 
     def start_refresh_timer(self):
@@ -455,6 +476,8 @@ class Shop:
             if purchase_option.lower() == 'y':
                 choice = input("Enter the number of the item you want to purchase: ")
                 self.purchase_item(choice)
+
+
 shop = Shop()
 
 
@@ -482,10 +505,10 @@ def explore():
                             print_help()
 
                         elif insc == 'auto':
-                            print_auto()
+                            auto_mode_manager.print_auto()
 
                         elif insc == 'skills':
-                            print_skills()
+                            skills_manager.print_skills()
 
                         elif insc == 'levelup':
                             level = input("---->")
